@@ -1,24 +1,26 @@
-# README
+# Rails JS Todo List App Backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```
+/*
+t.string :name 
+t.references :user
+*/
+TodoList
+  belongs_to :user
+  has_many :tasks
 
-Things you may want to cover:
+/*
+t.string :name 
+t.text :notes
+t.boolean :complete 
+t.references :user
+t.references :todo_list
+*/
+Task
+  belongs_to :user
+  belongs_to :todo_list
+```
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+rails g scaffold TodoList name user:references
+```
