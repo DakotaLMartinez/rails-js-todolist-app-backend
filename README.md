@@ -24,3 +24,7 @@ Task
 ```
 rails g scaffold TodoList name user:references
 ```
+
+```
+rails g scaffold Task name notes:text complete:boolean user:references todo_list:references
+```
