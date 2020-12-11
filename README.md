@@ -1,5 +1,7 @@
 # Rails JS Todo List App Backend
 
+For the beginning of this build, we followed along with the [Rails Devise JWT Tutorial](https://github.com/dakotalmartinez/rails-devise-jwt-tutorial)
+
 ```
 /*
 t.string :name 
@@ -26,5 +28,5 @@ rails g scaffold TodoList name user:references
 ```
 
 ```
-rails g scaffold Task name notes:text complete:boolean user:references todo_list:references
+rails g scaffold Task name notes:text completed:boolean user:references todo_list:references
 ```
