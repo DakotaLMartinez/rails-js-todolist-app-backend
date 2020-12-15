@@ -34,6 +34,7 @@ class TodoListsController < ApplicationController
   # DELETE /todo_lists/1
   def destroy
     @todo_list.destroy
+    render json: TodoListSerializer.new(@todo_list).serializable_hash[:data][:attributes], status: :ok
   end
 
   private
