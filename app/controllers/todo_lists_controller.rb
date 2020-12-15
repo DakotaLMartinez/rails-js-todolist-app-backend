@@ -25,9 +25,9 @@ class TodoListsController < ApplicationController
   # PATCH/PUT /todo_lists/1
   def update
     if @todo_list.update(todo_list_params)
-      render json: @todo_list
+      render json: TodoListSerializer.new(@todo_list).serializable_hash[:data][:attributes], status: :ok, location: @todo_list
     else
-      render json: @todo_list.errors, status: :unprocessable_entity
+      render json: @todo_list.errors.full_messages.to_sentence, status: :unprocessable_entity
     end
   end
 
@@ -39,11 +39,11 @@ class TodoListsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_todo_list
-      @todo_list = TodoList.find(params[:id])
+      @todo_list = current_user.todo_lists.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def todo_list_params
-      params.require(:todo_list).permit(:name, :user_id)
+      params.require(:todo_list).permit(:name)
     end
 end
