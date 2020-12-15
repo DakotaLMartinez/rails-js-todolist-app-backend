@@ -9,7 +9,8 @@ class TodoListsController < ApplicationController
 
   # GET /todo_lists/1
   def show
-    render json: @todo_list
+    @todo_list.make_active_list_for(current_user)
+    render json: TodoListTaskSerializer.new(@todo_list, include: [:tasks]).serializable_hash[:data], status: :ok
   end
 
   # POST /todo_lists
