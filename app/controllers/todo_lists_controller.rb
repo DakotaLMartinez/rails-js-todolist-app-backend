@@ -14,12 +14,11 @@ class TodoListsController < ApplicationController
 
   # POST /todo_lists
   def create
-    @todo_list = TodoList.new(todo_list_params)
-
+    @todo_list = current_user.todo_lists.build(todo_list_params)
     if @todo_list.save
-      render json: @todo_list, status: :created, location: @todo_list
+      render json: TodoListSerializer.new(@todo_list).serializable_hash[:data][:attributes], status: :created, location: @todo_list
     else
-      render json: @todo_list.errors, status: :unprocessable_entity
+      render json: @todo_list.errors.full_messages.to_sentence, status: :unprocessable_entity
     end
   end
 
