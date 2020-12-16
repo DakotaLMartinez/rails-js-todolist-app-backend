@@ -3,9 +3,9 @@ class TodoListsController < ApplicationController
 
   # GET /todo_lists
   def index
-    @todo_lists = TodoList.all
+    @todo_lists = current_user.todo_lists
 
-    render json: @todo_lists
+    render json: TodoListSerializer.new(@todo_lists).serializable_hash[:data].map{|hash| hash[:attributes]}
   end
 
   # GET /todo_lists/1
