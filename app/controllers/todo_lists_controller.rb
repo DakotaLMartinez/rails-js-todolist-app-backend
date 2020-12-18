@@ -15,12 +15,12 @@ class TodoListsController < ApplicationController
 
   # POST /todo_lists
   def create
-    @todo_list = TodoList.new(todo_list_params)
+    @todo_list = current_user.todo_lists.build(todo_list_params)
 
     if @todo_list.save
       render json: @todo_list, status: :created, location: @todo_list
     else
-      render json: @todo_list.errors, status: :unprocessable_entity
+      render json: @todo_list.errors.full_messages.to_sentence, status: :unprocessable_entity
     end
   end
 
@@ -46,6 +46,6 @@ class TodoListsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def todo_list_params
-      params.require(:todo_list).permit(:name, :user_id)
+      params.require(:todo_list).permit(:name)
     end
 end
