@@ -18,9 +18,9 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
-      render json: @task, status: :created, location: @task
+      render json: TaskSerializer.new(@task).serializable_hash[:data][:attributes], status: :created, location: @task
     else
-      render json: @task.errors, status: :unprocessable_entity
+      render json: @task.errors.full_messages.to_sentence, status: :unprocessable_entity
     end
   end
 
