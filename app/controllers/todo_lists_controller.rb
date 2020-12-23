@@ -10,7 +10,11 @@ class TodoListsController < ApplicationController
 
   # GET /todo_lists/1
   def show
-    render json: @todo_list
+    # byebug
+    render json: {
+      id: params[:id],
+      tasksAttributes: TodoListTaskSerializer.new(@todo_list, include: [:tasks]).serializable_hash[:included].map{|hash| hash[:attributes]}
+    }
   end
 
   # POST /todo_lists
