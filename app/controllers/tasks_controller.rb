@@ -27,9 +27,9 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   def update
     if @task.update(task_params)
-      render json: @task
+      render json: TaskSerializer.new(@task).serializable_hash[:data][:attributes]
     else
-      render json: @task.errors, status: :unprocessable_entity
+      render json: @task.errors.full_messages.to_sentence, status: :unprocessable_entity
     end
   end
 
@@ -41,7 +41,7 @@ class TasksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.find(params[:id])
+      @task = current_user.tasks.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

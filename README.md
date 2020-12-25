@@ -30,3 +30,19 @@ rails g scaffold TodoList name user:references
 ```
 rails g scaffold Task name notes:text completed:boolean user:references todo_list:references
 ```
+
+```rb
+class ApplicationController < ActionController::API
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
+  def current_user 
+    User.first
+  end
+
+  private 
+  def handle_record_not_found
+    render json: "Record not found", status: :not_found
+  end 
+end
+
+```
+Adding a rescue for ActiveRecord::RecordNotFound allows us to use `find` throughout the application, knowing that any record that is not found will result in a 404 status code response, with a meaningful text error message rather than an internal server error. (500 status code reponse)
