@@ -40,12 +40,13 @@ class TodoListsController < ApplicationController
   # DELETE /todo_lists/1
   def destroy
     @todo_list.destroy
+    render json: {id: @todo_list.id}, status: :ok
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_todo_list
-      @todo_list = TodoList.find(params[:id])
+      @todo_list = current_user.todo_lists.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
