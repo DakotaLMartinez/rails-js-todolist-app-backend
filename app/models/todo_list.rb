@@ -1,6 +1,6 @@
 class TodoList < ApplicationRecord
   belongs_to :user
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
   validates :name, presence: true
 
   def make_active_list_for(user)

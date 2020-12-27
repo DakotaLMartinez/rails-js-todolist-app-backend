@@ -36,6 +36,7 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   def destroy
     @task.destroy
+    render json: TaskSerializer.new(@task).serializable_hash[:data][:attributes], status: :ok
   end
 
   private
