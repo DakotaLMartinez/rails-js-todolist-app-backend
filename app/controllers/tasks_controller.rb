@@ -27,9 +27,9 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   def update
     if @task.update(task_params)
-      render json: @task
+      render json: TaskSerializer.new(@task).serializable_hash[:data][:attributes], status: :ok
     else
-      render json: @task.errors, status: :unprocessable_entity
+      render json: @task.errors.full_messages.to_sentence, status: :unprocessable_entity
     end
   end
 
